@@ -1,7 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Float, Boolean, JSON
-from sqlalchemy.orm import relationship
 from .database import Base
-import time
+from sqlalchemy.orm import relationship
 from datetime import datetime
 
 
@@ -34,3 +33,16 @@ class Booking(Base):
     transaction_id = Column(String, nullable=True)
     payment_status = Column(String, nullable=True)
     soft_delete = Column(Boolean, default=False)
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True, nullable=False)
+    email = Column(String, unique=True, index=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
+    is_active = Column(Boolean, default=True)
+    is_superuser = Column(Boolean, default=False)
+
+    bookings = relationship("Booking", back_populates="user")
