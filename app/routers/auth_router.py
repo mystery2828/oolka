@@ -17,5 +17,5 @@ def login_for_access_token(db: Session = Depends(database.get_db), form_data: OA
     return auth_controller.login_for_access_token(db, form_data)
 
 @router.get("/users/me", response_model=schemas.UserResponse)
-def read_users_me(current_user: schemas.User = Depends(auth_service.get_current_active_user)):
+def read_users_me(current_user: schemas.UserResponse = Depends(auth_service.get_current_active_user)):
     return current_user
